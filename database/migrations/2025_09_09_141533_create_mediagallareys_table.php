@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
              $table->string('image_path');
               $table->string('caption');
-               $table->int('event_id');
-                $table->int('Organizer_id');
-                 $table->ForeignKey('Organizer_id')->references('id')->on('users')->where('role', 'Organizer');
-                $table->ForeignKey('event_id')->references('id')->on('events');
+               $table->integer('event_id');
+                $table->integer('Organizer_id');
+                 $table->Foreign('Organizer_id')->references('id')->on('users');
+                $table->Foreign('event_id')->references('id')->on('events');
             $table->timestamps();
         });
     }

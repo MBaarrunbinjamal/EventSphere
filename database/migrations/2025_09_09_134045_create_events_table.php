@@ -12,19 +12,21 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('events', function (Blueprint $table) {
-            $table->id();
+      $table->id();
             $table->string('Title');
             $table->text('Description');
             $table->date('Date');
             $table->time('Time');
-             $table->string('category');
-              $table->string('venue');
-               $table->int('Organizer_id');
-             $table->ForeignKey('Organizer_id')->references('id')->on('users')->where('role', 'organizer');
+            $table->string('category');
+            $table->string('venue');
+
+      
+            $table->unsignedBigInteger('Organizer_id');
+            $table->foreign('Organizer_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
-            
         });
     }
+    
 
     /**
      * Reverse the migrations.

@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('event_share_logs', function (Blueprint $table) {
             $table->id();
-             $table->int('event_id');
-            $table->int('user_id');
+             $table->integer('event_id');
+            $table->integer('user_id');
                 $table->string('platform');
                  $table->string('Message');
-                 $table->ForeignKey('user_id')->references('id')->on('users');
-                $table->ForeignKey('event_id')->references('id')->on('events');
+                 $table->Foreign('user_id')->references('id')->on('users');
+                $table->Foreign('event_id')->references('id')->on('events');
             $table->timestamps();
         });
     }

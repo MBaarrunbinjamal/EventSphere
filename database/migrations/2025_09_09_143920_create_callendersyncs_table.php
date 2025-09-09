@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('callendersyncs', function (Blueprint $table) {
             $table->id();
-             $table->int('event_id');
-            $table->int('user_id');
+             $table->integer('event_id');
+            $table->integer('user_id');
            $table->enum('calendar_type', ['Google', 'Outlook', 'Apple'])->nullable();
                  $table->string('callender_url');
-                 $table->ForeignKey('user_id')->references('id')->on('users');
-                $table->ForeignKey('event_id')->references('id')->on('events');
+                 $table->Foreign('user_id')->references('id')->on('users');
+                $table->Foreign('event_id')->references('id')->on('events');
             $table->timestamps();
         });
     }

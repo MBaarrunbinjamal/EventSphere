@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('atendances', function (Blueprint $table) {
             $table->id();
-              $table->int('event_id');
-            $table->int('Student_id');
-             $table->boolean('atended')->default('false');
-              $table->ForeignKey('Student_id')->references('id')->on('users')->where('role', 'student');
-                $table->ForeignKey('event_id')->references('id')->on('events');
+              $table->integer('event_id');
+            $table->integer('Student_id');
+             $table->boolean('atended')->default(false);
+              $table->Foreign('Student_id')->references('id')->on('users');
+                $table->Foreign('event_id')->references('id')->on('events');
             $table->timestamps();
         });
     }

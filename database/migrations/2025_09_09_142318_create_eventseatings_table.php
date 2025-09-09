@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('eventseatings', function (Blueprint $table) {
             $table->id();
-                $table->int('event_id');
+                $table->integer('event_id');
                  $table->string('veneu');
-                  $table->int('total_seats');
+                  $table->integer('total_seats');
                    $table->unsignedInteger('available_seats');
                     $table->boolean('Waitlist_enabled')->default(false);
-                    $table->ForeignKey('event_id')->references('id')->on('events');
-                     $table->ForeignKey('veneu')->references('venue')->on('events');
+                    $table->Foreign('event_id')->references('id')->on('events');
+                     $table->Foreign('veneu')->references('venue')->on('events');
 
             $table->timestamps();
         });

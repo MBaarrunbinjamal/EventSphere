@@ -37,7 +37,6 @@ https://templatemo.com/tm-569-edu-meeting
   
 
 <body>
-
   <!-- Sub Header -->
   <div class="sub-header">
     <div class="container">
@@ -60,6 +59,8 @@ https://templatemo.com/tm-569-edu-meeting
       </div>
     </div>
   </div>
+  
+
 
   <!-- ***** Header Area Start ***** -->
   <header class="header-area header-sticky">
@@ -74,15 +75,15 @@ https://templatemo.com/tm-569-edu-meeting
                       <!-- ***** Logo End ***** -->
                       <!-- ***** Menu Start ***** -->
                       <ul class="nav">
-                          
+
                           <li class="scroll-to-section"><a href="/" class="active">Home</a></li>
-                          <li><a href="/meeting">Meetings</a></li>
+                          <li><a href="/meetingss">Meetings</a></li>
                           <li class="scroll-to-section"><a href="/#apply">Apply Now</a></li>
                           <li class="has-sub">
                               <a href="javascript:void(0)">Pages</a>
                               <ul class="sub-menu">
                                   <li><a href="meetings.html">Upcoming Meetings</a></li>
-                                  <li><a href="/mdetail">Meeting Details</a></li>
+                                  <li><a href="/mdetails">Meeting Details</a></li>
                               </ul>
                           </li>
                           <li class="scroll-to-section"><a href="#courses">Courses</a></li> 
@@ -97,7 +98,9 @@ https://templatemo.com/tm-569-edu-meeting
           </div>
       </div>
   </header>
+   
   <!-- ***** Header Area End ***** -->
+       
     @yield('content')
 
     <!-- footer start -->
@@ -126,52 +129,7 @@ https://templatemo.com/tm-569-edu-meeting
     <script src="clients/assets/js/video.js"></script>
     <script src="clients/assets/js/slick-slider.js"></script>
     <script src="clients/assets/js/custom.js"></script>
-    <script>
-        //according to loftblog tut
-        $('.nav li:first').addClass('active');
-
-        var showSection = function showSection(section, isAnimate) {
-          var
-          direction = section.replace(/#/, ''),
-          reqSection = $('.section').filter('[data-section="' + direction + '"]'),
-          reqSectionPos = reqSection.offset().top - 0;
-
-          if (isAnimate) {
-            $('body, html').animate({
-              scrollTop: reqSectionPos },
-            800);
-          } else {
-            $('body, html').scrollTop(reqSectionPos);
-          }
-
-        };
-
-        var checkSection = function checkSection() {
-          $('.section').each(function () {
-            var
-            $this = $(this),
-            topEdge = $this.offset().top - 80,
-            bottomEdge = topEdge + $this.height(),
-            wScroll = $(window).scrollTop();
-            if (topEdge < wScroll && bottomEdge > wScroll) {
-              var
-              currentId = $this.data('section'),
-              reqLink = $('a').filter('[href*=\\#' + currentId + ']');
-              reqLink.closest('li').addClass('active').
-              siblings().removeClass('active');
-            }
-          });
-        };
-
-        $('.main-menu, .responsive-menu, .scroll-to-section').on('click', 'a', function (e) {
-          e.preventDefault();
-          showSection($(this).attr('href'), true);
-        });
-
-        $(window).scroll(function () {
-          checkSection();
-        });
-    </script>
+   
 </body>
 
 </body>

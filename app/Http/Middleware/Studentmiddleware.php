@@ -18,7 +18,7 @@ class Studentmiddleware
     {
          if (Auth::check()) {
           
-            if (Auth::user()->Role === 'student') {
+            if (Auth::user()->role === 'student') {
                 return $next($request);
             }
 

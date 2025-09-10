@@ -1,58 +1,259 @@
-<x-guest-layout>
-    <x-authentication-card>
-        <x-slot name="logo">
-            <x-authentication-card-logo />
-        </x-slot>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Two-Factor Authentication</title>
+  <link rel="icon" type="image/png" href="{{ asset('clients/images/ChatGPT Image Aug 16, 2025, 02_24_34 PM.png') }}">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
-        <div x-data="{ recovery: false }">
-            <div class="mb-4 text-sm text-gray-600" x-show="! recovery">
-                {{ __('Please confirm access to your account by entering the authentication code provided by your authenticator application.') }}
-            </div>
+  <script src="https://unpkg.com/alpinejs" defer></script>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: "Segoe UI", sans-serif;
+    }
 
-            <div class="mb-4 text-sm text-gray-600" x-cloak x-show="recovery">
-                {{ __('Please confirm access to your account by entering one of your emergency recovery codes.') }}
-            </div>
+    body {
+      margin: 0;
+      background: linear-gradient(135deg, #6e0000ff, #000000ff);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
 
-            <x-validation-errors class="mb-4" />
+    .card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 18px;
+      padding: 40px 30px;
+      width: 100%;
+      max-width: 420px;
+      backdrop-filter: blur(15px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+      color: white;
+    }
 
-            <form method="POST" action="{{ route('two-factor.login') }}">
-                @csrf
+    h2 {
+      margin-bottom: 20px;
+      font-size: 22px;
+      text-align: center;
+    }
 
-                <div class="mt-4" x-show="! recovery">
-                    <x-label for="code" value="{{ __('Code') }}" />
-                    <x-input id="code" class="block mt-1 w-full" type="text" inputmode="numeric" name="code" autofocus x-ref="code" autocomplete="one-time-code" />
-                </div>
+    p {
+      font-size: 14px;
+      color: #ddd;
+      margin-bottom: 20px;
+    }
 
-                <div class="mt-4" x-cloak x-show="recovery">
-                    <x-label for="recovery_code" value="{{ __('Recovery Code') }}" />
-                    <x-input id="recovery_code" class="block mt-1 w-full" type="text" name="recovery_code" x-ref="recovery_code" autocomplete="one-time-code" />
-                </div>
+    label {
+      font-size: 14px;
+      display: block;
+      margin-bottom: 6px;
+      color: #ccc;
+    }
 
-                <div class="flex items-center justify-end mt-4">
-                    <button type="button" class="text-sm text-gray-600 hover:text-gray-900 underline cursor-pointer"
-                                    x-show="! recovery"
-                                    x-on:click="
-                                        recovery = true;
-                                        $nextTick(() => { $refs.recovery_code.focus() })
-                                    ">
-                        {{ __('Use a recovery code') }}
-                    </button>
+    input[type="text"] {
+      width: 100%;
+      padding: 10px 12px;
+      border: none;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      background-color: rgba(255, 255, 255, 0.1);
+      color: white;
+    }
 
-                    <button type="button" class="text-sm text-gray-600 hover:text-gray-900 underline cursor-pointer"
-                                    x-cloak
-                                    x-show="recovery"
-                                    x-on:click="
-                                        recovery = false;
-                                        $nextTick(() => { $refs.code.focus() })
-                                    ">
-                        {{ __('Use an authentication code') }}
-                    </button>
+    input[type="text"]::placeholder {
+      color: #aaa;
+    }
 
-                    <x-button class="ms-4">
-                        {{ __('Log in') }}
-                    </x-button>
-                </div>
-            </form>
-        </div>
-    </x-authentication-card>
-</x-guest-layout>
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .link-button {
+      background: transparent;
+      border: none;
+      color: #bbb;
+      font-size: 13px;
+      cursor: pointer;
+      text-decoration: underline;
+      padding: 0;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      background-color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      color: black;
+      font-size: 14px;
+      cursor: pointer;
+      /* transition: background 0.3s ease; */
+    }
+
+    .btn:hover {
+      background-color:  rgba(216, 166, 0, 1);
+    }
+
+    .error {
+      background-color: rgba(255, 0, 0, 0.1);
+      color: #ffbdbd;
+      border-left: 4px solid #ff3e3e;
+      padding: 10px;
+      border-radius: 6px;
+      font-size: 13px;
+      margin-bottom: 15px;
+    }
+
+        /* float button css  */
+    #floatingButton {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background-color: #ffffff; /* Bootstrap purple */
+      color: black;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: fixed;
+      bottom: 40px;
+      right: 40px;
+      z-index: 9999;
+      cursor: move;
+      box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+      animation: bounce 2s infinite;
+      user-select: none;
+    }
+
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    #floatingButton:hover {
+      background-color: rgba(216, 166, 0, 1);
+      transition-duration: 0.25s;
+    }
+  </style>
+</head>
+<body>
+  <div class="card" x-data="{ recovery: false }">
+    <h2>Two-Factor Authentication</h2>
+
+    <p x-show="!recovery">
+      Please confirm access to your account by entering the authentication code provided by your authenticator application.
+    </p>
+    <p x-cloak x-show="recovery">
+      Please confirm access to your account by entering one of your emergency recovery codes.
+    </p>
+
+    @if ($errors->any())
+      <div class="error">
+        {{ $errors->first() }}
+      </div>
+    @endif
+
+    <form method="POST" action="{{ route('two-factor.login') }}">
+      @csrf
+
+      <div x-show="! recovery">
+        <label for="code">Authentication Code</label>
+        <input type="text" id="code" name="code" inputmode="numeric" autofocus x-ref="code" autocomplete="one-time-code" placeholder="123456" />
+      </div>
+
+      <div x-cloak x-show="recovery">
+        <label for="recovery_code">Recovery Code</label>
+        <input type="text" id="recovery_code" name="recovery_code" x-ref="recovery_code" autocomplete="one-time-code" placeholder="your-backup-code" />
+      </div>
+
+      <div class="actions">
+        <button type="button" class="link-button"
+                x-show="! recovery"
+                x-on:click="
+                  recovery = true;
+                  $nextTick(() => { $refs.recovery_code.focus() })
+                ">
+          Use a recovery code
+        </button>
+
+        <button type="button" class="link-button"
+                x-cloak x-show="recovery"
+                x-on:click="
+                  recovery = false;
+                  $nextTick(() => { $refs.code.focus() })
+                ">
+          Use an authentication code
+        </button>
+
+        <button type="submit" class="btn">Log in</button>
+      </div>
+    </form>
+  </div>
+
+   <!-- float button start -->
+
+<!-- Floating Button -->
+  
+    <div id="floatingButton" title="Back" >
+    <i class="fas fa-arrow-left"></i>
+  </div>
+  
+
+  <!-- Bootstrap JS (Optional) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    const btn = document.getElementById('floatingButton');
+  let isDragging = false;
+  let offsetX, offsetY;
+  let startX, startY;
+
+  btn.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    offsetX = e.clientX - btn.getBoundingClientRect().left;
+    offsetY = e.clientY - btn.getBoundingClientRect().top;
+    startX = e.clientX;
+    startY = e.clientY;
+  });
+
+  document.addEventListener('mousemove', (e) => {
+    if (isDragging) {
+      btn.style.left = `${e.clientX - offsetX}px`;
+      btn.style.top = `${e.clientY - offsetY}px`;
+      btn.style.right = 'auto';
+      btn.style.bottom = 'auto';
+    }
+  });
+
+  document.addEventListener('mouseup', (e) => {
+    if (isDragging) {
+      const endX = e.clientX;
+      const endY = e.clientY;
+      const moved = Math.abs(endX - startX) > 5 || Math.abs(endY - startY) > 5;
+      isDragging = false;
+
+      // If it wasn't a drag (i.e., a click), go back
+      if (!moved) {
+        window.location.href = '/'; // Change if needed
+      }
+    }
+  });
+  </script>
+
+   <!-- float button end -->
+</body>
+</html>

@@ -1,45 +1,211 @@
-<x-guest-layout>
-    <x-authentication-card>
-        <x-slot name="logo">
-            <x-authentication-card-logo />
-        </x-slot>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Email Verification</title>
+  <link rel="icon" type="image/png" href="{{ asset('clients/images/ChatGPT Image Aug 16, 2025, 02_24_34 PM.png') }}">
+   <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
-        <div class="mb-4 text-sm text-gray-600">
-            {{ __('Before continuing, could you verify your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.') }}
-        </div>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Segoe UI", sans-serif;
+    }
 
-        @if (session('status') == 'verification-link-sent')
-            <div class="mb-4 font-medium text-sm text-green-600">
-                {{ __('A new verification link has been sent to the email address you provided in your profile settings.') }}
-            </div>
-        @endif
+    body {
+      height: 100vh;
+      background: linear-gradient(135deg, #6e0000ff, #000000ff);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+    }
 
-        <div class="mt-4 flex items-center justify-between">
-            <form method="POST" action="{{ route('verification.send') }}">
-                @csrf
+    .card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1.5px solid rgba(255, 196, 0, 1);
+      border-radius: 20px;
+      padding: 35px 40px;
+      width: 400px;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(15px);
+      text-align: center;
+    }
 
-                <div>
-                    <x-button type="submit">
-                        {{ __('Resend Verification Email') }}
-                    </x-button>
-                </div>
-            </form>
+    .card h2 {
+      font-size: 24px;
+      margin-bottom: 15px;
+    }
 
-            <div>
-                <a
-                    href="{{ route('profile.show') }}"
-                    class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                >
-                    {{ __('Edit Profile') }}</a>
+    .card p {
+      font-size: 15px;
+      margin-bottom: 20px;
+      color: #e0e0e0;
+    }
 
-                <form method="POST" action="{{ route('logout') }}" class="inline">
-                    @csrf
+    .status-msg {
+      background-color: rgba(0, 255, 0, 0.1);
+      border-left: 4px solid #00ff88;
+      color: #b9f8d3;
+      padding: 10px;
+      margin-bottom: 20px;
+      border-radius: 6px;
+      font-size: 14px;
+    }
 
-                    <button type="submit" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 ms-2">
-                        {{ __('Log Out') }}
-                    </button>
-                </form>
-            </div>
-        </div>
-    </x-authentication-card>
-</x-guest-layout>
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .btn, .link-button {
+      background-color: #ffffffff;
+      padding: 10px 18px;
+      border: none;
+      border-radius: 8px;
+      color: black;
+      cursor: pointer;
+      font-size: 14px;
+      text-decoration: none;
+      transition: 0.3s ease;
+    }
+
+    .btn:hover, .link-button:hover {
+      background-color: rgba(255, 196, 0, 1);
+    }
+
+    .link-button {
+      background: transparent;
+      border: 1px solid #aaa;
+      padding: 10px 14px;
+    }
+
+    form.inline {
+      display: inline;
+    }
+
+    /* float button css  */
+    #floatingButton {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background-color: #ffffffff; /* Bootstrap purple */
+      color: black;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: fixed;
+      bottom: 40px;
+      right: 40px;
+      z-index: 9999;
+      cursor: move;
+      box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+      animation: bounce 2s infinite;
+      user-select: none;
+    }
+
+    @keyframes bounce {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    #floatingButton:hover {
+      background-color: rgba(255, 196, 0, 1);
+      transition-duration: 0.25s;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2 class="text-white">Verify Your Email</h2>
+
+    <p>
+      Before continuing, please verify your email by clicking on the link we just sent. If you didn’t receive it, we can send another.
+    </p>
+
+    @if (session('status') == 'verification-link-sent')
+      <div class="status-msg">
+        A new verification link has been sent to your email.
+      </div>
+    @endif
+
+    <div class="actions">
+      <form method="POST" action="{{ route('verification.send') }}">
+        @csrf
+        <button type="submit" class="btn">Resend Email</button>
+      </form>
+
+      <a href="{{ route('profile.show') }}" class="link-button">Edit Profile</a>
+
+      <form method="POST" action="{{ route('logout') }}" class="inline">
+        @csrf
+        <button type="submit" class="link-button">Log Out</button>
+      </form>
+    </div>
+  </div>
+
+   <!-- float button start -->
+
+<!-- Floating Button -->
+  
+    <div id="floatingButton" title="Back" >
+    <i class="fas fa-arrow-left"></i>
+  </div>
+  
+
+  <!-- Bootstrap JS (Optional) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    const btn = document.getElementById('floatingButton');
+  let isDragging = false;
+  let offsetX, offsetY;
+  let startX, startY;
+
+  btn.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    offsetX = e.clientX - btn.getBoundingClientRect().left;
+    offsetY = e.clientY - btn.getBoundingClientRect().top;
+    startX = e.clientX;
+    startY = e.clientY;
+  });
+
+  document.addEventListener('mousemove', (e) => {
+    if (isDragging) {
+      btn.style.left = `${e.clientX - offsetX}px`;
+      btn.style.top = `${e.clientY - offsetY}px`;
+      btn.style.right = 'auto';
+      btn.style.bottom = 'auto';
+    }
+  });
+
+  document.addEventListener('mouseup', (e) => {
+    if (isDragging) {
+      const endX = e.clientX;
+      const endY = e.clientY;
+      const moved = Math.abs(endX - startX) > 5 || Math.abs(endY - startY) > 5;
+      isDragging = false;
+
+      // If it wasn't a drag (i.e., a click), go back
+      if (!moved) {
+        window.location.href = '/'; // Change if needed
+      }
+    }
+  });
+  </script>
+
+   <!-- float button end -->
+</body>
+</html>

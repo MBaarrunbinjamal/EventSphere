@@ -12,7 +12,7 @@ body {
 }
 
 body {
-  background: linear-gradient(-45deg, #2c003e, #000000, #444444, #2c003e);
+  background: linear-gradient(-45deg, #ca0000ff, #000000, #444444, #550000ff);
   background-size: 400% 400%;
   animation: gradientFlow 20s ease infinite;
   color: #fff;
@@ -20,6 +20,7 @@ body {
   margin: 0;
   padding: 0;
 }
+
 
 @keyframes gradientFlow {
   0% {
@@ -39,7 +40,10 @@ body {
   }
 }
 </style>
-
-
+<br>
+<div>
+  <h1 class="text-center mb-4">Welcome {{ Auth::user()->name }}</h1>
+</div>
+        
 
 @endsection

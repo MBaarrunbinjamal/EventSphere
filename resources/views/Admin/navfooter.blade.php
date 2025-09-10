@@ -18,7 +18,7 @@
        padding-bottom: 60px; */
     }
     .navbar {
-      background: linear-gradient(90deg, #000000ff, #2c003e);
+      background: linear-gradient(90deg, #000000ff, #cf0000ff);
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
      
       
@@ -89,9 +89,9 @@
       <ul class="navbar-nav">
         <li class="nav-item"><a class="nav-link" href="/dash">Dashboard</a></li>
         <li class="nav-item"><a class="nav-link" href="/users">Users</a></li>
-        <li class="nav-item"><a class="nav-link" href="/form">Ai Train</a></li>
-        <li class="nav-item"><a class="nav-link" href="/question">Ai Questions</a></li>
-        <li class="nav-item"><a class="nav-link" href="/addblogs">Add Blogs</a></li>
+        <li class="nav-item"><a class="nav-link" href="/form">Announcements</a></li>
+        <li class="nav-item"><a class="nav-link" href="/question">Reset Users Password</a></li>
+        <li class="nav-item"><a class="nav-link" href="/addblogs">Events</a></li>
         <li class="nav-item"><a class="nav-link" href="/">Back To Website</a></li>
         <li class="nav-item"><a class="nav-link" href="/reviews">Reviews</a></li>
         <li class="nav-item d-lg-none mt-2">

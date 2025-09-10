@@ -87,7 +87,15 @@ https://templatemo.com/tm-569-edu-meeting
                               </ul>
                           </li>
                           <li class="scroll-to-section"><a href="#courses">Courses</a></li> 
-                          <li class="scroll-to-section"><a href="#contact">Contact Us</a></li> 
+                          <li class="scroll-to-section"><a href="#contact">Contact Us</a></li>
+                          @if (Auth::check())
+                   <form action="/logout" method="POST" >@csrf<button>Logout</button></form>
+                @else
+                 <button><a href="/login">Sign in</a></button>
+                          <button><a href="/register">Sign up</a></button>
+                          @endif
+                         
+                           
                       </ul>        
                       <a class='menu-trigger'>
                           <span>Menu</span>

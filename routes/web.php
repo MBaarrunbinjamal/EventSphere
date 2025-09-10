@@ -4,6 +4,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Middleware\Adminmiddleware;
 use App\Http\Middleware\Studentmiddleware;
 use App\Http\Middleware\organizermiddleware;
+use App\Http\Controllers\EventController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -46,11 +47,16 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), Studentmidd
 // Student middleware end
 
 
+
+
+
+
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), organizermiddleware::class])
     ->group(function () {
        Route::get('/organ', function () {
             return view('organizer.index'); 
-            // file: resources/views/organizer/index.blade.php
+            
         });
+       Route::post('/events', [EventController::class, 'store']);
     });
      

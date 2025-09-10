@@ -25,6 +25,9 @@ return new class extends Migration
             $table->foreign('Organizer_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
+
+        
+
     }
     
 

@@ -40,3 +40,6 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), Studentmidd
 
 });
 // Student middleware end
+Route::get('/dash', function () {
+    return view('Admin.dashboard');
+});

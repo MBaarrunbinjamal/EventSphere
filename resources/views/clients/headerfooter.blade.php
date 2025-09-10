@@ -29,7 +29,46 @@ https://templatemo.com/tm-569-edu-meeting
 -->
 
 <style>
-  
+  .btna{
+    text-decoration: none !important;
+    color: black;
+  }
+  .navbtn{
+    background-color: #ffffffff;
+    border: 1px solid #000000ff;
+    color: black;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none !important;
+    display: inline-block;
+    font-size: 14px;
+    margin: 1px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+
+  .navbtn:hover {
+    background-color: #ec971f;
+    color: white !important;
+  }
+
+.lbtn{
+ background-color: #ffffffff;
+    border: 1px solid #000000ff;
+    color: black;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none !important;
+    display: inline-block;
+    font-size: 14px;
+    margin: 1px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+.lbtn:hover {
+    background-color: #ff0000ff;
+    color: white !important;
+  }
 </style>
 
   </head>
@@ -89,10 +128,11 @@ https://templatemo.com/tm-569-edu-meeting
                           <li class="scroll-to-section"><a href="#courses">Courses</a></li> 
                           <li class="scroll-to-section"><a href="#contact">Contact Us</a></li>
                           @if (Auth::check())
-                   <form action="/logout" method="POST" >@csrf<button>Logout</button></form>
+                   <form action="/logout" method="POST" >@csrf<button class="lbtn lbtn">Logout</button></form>
                 @else
-                 <button><a href="/login">Sign in</a></button>
-                          <button><a href="/register">Sign up</a></button>
+                 <a href="/login" class="navbtn btna">Sign in</a>
+
+                          <a href="/register" class="navbtn btna">Sign up</a>
                           @endif
                          
                            

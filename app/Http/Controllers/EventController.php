@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Events;
+use App\Models\mediagallarey;
 use Illuminate\Support\Facades\Auth;
 
 class EventController extends Controller
@@ -34,6 +35,27 @@ class EventController extends Controller
         $event->organizer_id =  Auth::id();
         $event->save();
 
-        return redirect()->back()->with('success', 'Event created successfully ✅');
+        return redirect()->back()->with('success', 'Event created successfully ');
+    }
+    public function geteverything()
+    {
+        $events = Events::get();
+        return view('Admin.media', compact('events'));
+    }
+    public function imageupload(Request $req)
+    {
+     $file = $req->file('image_path');
+        $req->event_id;
+        $req->caption;
+        $fileName = time() . '_' . $file->getClientOriginalName();
+ $file->move(public_path('uploads'), $fileName);
+
+   $rec=new mediagallarey();
+    $rec->event_id=$req->event_id;
+    $rec->caption=$req->caption;
+    $rec->image_path=$fileName;
+    $rec->organizer_id=Auth::id();
+    $rec->save();
+    return redirect()->back();      
     }
 }

@@ -18,6 +18,7 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
+    
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
@@ -38,22 +39,33 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), Adminmiddle
     // Admin dashboard
     Route::get('/dash', function () {
         return view('Admin.dashboard');
+
     });
+       Route::post('/eventimg', [EventController::class, 'imageupload']);
+    Route::get('/user', [AdminController::class,('getuser')]);
+
+       Route::get('/media', [EventController::class,('geteverything')]);
     Route::get('/announcement', [AdminController::class, 'showAnnouncementForm'])->name('announcement');
     Route::post('/save-announcement', [AdminController::class, 'storeAnnouncement'])->name('save.announcement');
     Route::get('/view-announcements', [AdminController::class, 'viewAnnouncements'])->name('view.announcements');
 Route::get('/export-users-excel', [AdminController::class, 'exportExcel'])->name('users.export.excel');
 Route::get('/export-users-pdf', [AdminController::class, 'exportPDF'])->name('users.export.pdf');
+
     // Announcement routes
 
 });
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), organizermiddleware::class])
     ->group(function () {
-       Route::get('/organ', function () {
-            return view('organizer.index'); 
-            
-        });
-       Route::post('/events', [EventController::class, 'store']);
+        
+       
+   Route::get('/organ', function () {
+        return view('organizer.index');
     });
+            
+        
+       Route::post('/events', [EventController::class, 'store']);
+      
+  
      
+    });

@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\HomeController;
 use App\Http\Middleware\Adminmiddleware;
+use App\Http\Middleware\organizermiddleware;
 use App\Http\Middleware\Studentmiddleware;
 use Illuminate\Support\Facades\Route;
 
@@ -40,12 +42,18 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), Adminmiddle
     Route::get('/announcement', [AdminController::class, 'showAnnouncementForm'])->name('announcement');
     Route::post('/save-announcement', [AdminController::class, 'storeAnnouncement'])->name('save.announcement');
     Route::get('/view-announcements', [AdminController::class, 'viewAnnouncements'])->name('view.announcements');
-
+Route::get('/export-users-excel', [AdminController::class, 'exportExcel'])->name('users.export.excel');
+Route::get('/export-users-pdf', [AdminController::class, 'exportPDF'])->name('users.export.pdf');
     // Announcement routes
 
 });
 
-// Student middleware group
-Route::middleware(['auth:sanctum', config('jetstream.auth_session'), Studentmiddleware::class])->group(function () {
-    // Add student routes here
-});
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), organizermiddleware::class])
+    ->group(function () {
+       Route::get('/organ', function () {
+            return view('organizer.index'); 
+            
+        });
+       Route::post('/events', [EventController::class, 'store']);
+    });
+     

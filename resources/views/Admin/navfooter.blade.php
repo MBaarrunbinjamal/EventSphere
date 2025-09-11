@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Propello Admin Dashboard</title>
+  <title>EventSphere Admin Dashboard</title>
   <link rel="icon" type="image/png" href="{{ asset('clients/images/ChatGPT Image Aug 16, 2025, 02_24_34 PM.png') }}">
 
-  <!-- Bootstrap CSS -->
+  <!-- Bootstrap CSS yaha -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Bootstrap Icons -->
+  <!-- Bootstrap Icons yaha -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 
   <style>
@@ -49,7 +49,7 @@
 
 
 
-  /* underline hover navlinks */
+  
   .nav-link {
   position: relative;
   display: inline-block;
@@ -88,11 +88,11 @@
     <div class="collapse navbar-collapse justify-content-center center-links" id="navbarNavDropdown">
       <ul class="navbar-nav">
         <li class="nav-item"><a class="nav-link" href="/dash">Dashboard</a></li>
-        <li class="nav-item"><a class="nav-link" href="/users">Users</a></li>
-        <li class="nav-item"><a class="nav-link" href="/announcement">Announcements</a></li>
-        <li class="nav-item"><a class="nav-link" href="/question">Reset Users Password</a></li>
+        <li class="nav-item"><a class="nav-link" href="/user">Users</a></li>
+        <li class="nav-item"><a class="nav-link" href="/form">Announcements</a></li>
+        <li class="nav-item"><a class="nav-link" href="/question">UsersPassword</a></li>
         <li class="nav-item"><a class="nav-link" href="/addblogs">Events</a></li>
-        <li class="nav-item"><a class="nav-link" href="/">Back To Website</a></li>
+        <li class="nav-item"><a class="nav-link" href="/">Back To Web</a></li>
         <li class="nav-item"><a class="nav-link" href="/reviews">Reviews</a></li>
         <li class="nav-item d-lg-none mt-2">
           <form method="POST" action="{{ route('logout') }}">
@@ -106,7 +106,7 @@
       </ul>
     </div>
 
-    <!-- Logout button visible only on large screens -->
+    
     <div class="d-none d-lg-block">
       <form method="POST" action="{{ route('logout') }}">
         @csrf

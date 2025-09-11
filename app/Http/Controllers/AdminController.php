@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\UsersExport;
 use App\Models\announcement;
+use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AdminController extends Controller
 {
@@ -34,5 +38,21 @@ class AdminController extends Controller
         $announcements = Announcement::orderBy('created_at', 'desc')->get();
         return view('Admin.view-announcements', compact('announcements'));
     }
-  
+    public function getuser()
+    {
+       $rec = User::get();
+        return view('Admin.user',compact('rec'));
+    }
+
+ public function exportExcel()
+    {
+        return Excel::download(new UsersExport, 'users.xlsx');
+    }
+
+     public function exportPDF()
+    {
+        $users = User::select('id','name','email','role')->get();
+        $pdf = Pdf::loadView('Admin.users-pdf', compact('users'));
+        return $pdf->download('users.pdf');
+    }
 }

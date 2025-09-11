@@ -123,7 +123,8 @@
         </form>
     </div>
 </section>
-<!-- Event Form Section End -->
+
+
 
     <!-- baki sections as it is -->
     <section id="facts" class="section bg-image-1 facts text-center">

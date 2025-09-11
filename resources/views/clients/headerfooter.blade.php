@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-
+  <title>EventSphere</title>
+  <link rel="icon" type="image/png" href="{{ asset('clients/assets/images/logo5.png') }}">
   <head>
 
     <meta charset="utf-8">
@@ -8,9 +9,6 @@
     <meta name="description" content="">
     <meta name="author" content="TemplateMo">
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
-
-    <title>Education Meeting HTML5 Template</title>
-
     <!-- Bootstrap core CSS -->
     <link href="clients/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -29,6 +27,20 @@ https://templatemo.com/tm-569-edu-meeting
 -->
 
 <style>
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+html, body {
+  overflow-x: hidden;
+  width: 100%;
+}
+
+
+
   .btna{
     text-decoration: none !important;
     color: black;

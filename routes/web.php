@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\Admin\UserStatsController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\HomeController;
@@ -73,4 +73,12 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), organizermi
             return view('organizer.index');
         });
         Route::post('/events', [EventController::class, 'store']);
+    
+       Route::post('/events', [EventController::class, 'store']);
     });
+
+
+    Route::middleware(['auth'])->group(function () {
+    Route::get('/admin/user-stats', [UserStatsController::class, 'index'])->name('admin.user-stats');
+});
+     

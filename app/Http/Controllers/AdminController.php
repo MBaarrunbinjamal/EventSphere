@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Exports\UsersExport;
 use App\Models\announcement;
 use App\Models\User;
@@ -9,6 +10,8 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Models\Events;
+
 
 class AdminController extends Controller
 {
@@ -55,4 +58,7 @@ class AdminController extends Controller
         $pdf = Pdf::loadView('Admin.users-pdf', compact('users'));
         return $pdf->download('users.pdf');
     }
+
+
+
 }

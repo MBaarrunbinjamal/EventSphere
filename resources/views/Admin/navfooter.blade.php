@@ -89,9 +89,9 @@
       <ul class="navbar-nav">
         <li class="nav-item"><a class="nav-link" href="/dash">Dashboard</a></li>
         <li class="nav-item"><a class="nav-link" href="/user">Users</a></li>
-        <li class="nav-item"><a class="nav-link" href="/form">Announcements</a></li>
+        <li class="nav-item"><a class="nav-link" href="/announcement">Announcements</a></li>
         <li class="nav-item"><a class="nav-link" href="/question">UsersPassword</a></li>
-        <li class="nav-item"><a class="nav-link" href="/addblogs">Events</a></li>
+        <li class="nav-item"><a class="nav-link" href="/events">Events</a></li>
         <li class="nav-item"><a class="nav-link" href="/">Back To Web</a></li>
         <li class="nav-item"><a class="nav-link" href="/reviews">Reviews</a></li>
         <li class="nav-item d-lg-none mt-2">

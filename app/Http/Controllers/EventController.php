@@ -36,4 +36,15 @@ class EventController extends Controller
 
         return redirect()->back()->with('success', 'Event created successfully ✅');
     }
+   public function getevents()
+    {
+         $events = Events::orderBy('created_at', 'desc')->get();
+        return view('Admin.events', compact('events'));
+    }
+
+    public function show($id)
+    {
+        $event = Events::findOrFail($id);
+        return view('Admin.events', compact('event'));
+    }
 }

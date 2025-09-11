@@ -7,6 +7,7 @@ use App\Http\Middleware\Adminmiddleware;
 use App\Http\Middleware\organizermiddleware;
 use App\Http\Middleware\Studentmiddleware;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     return view('clients.index');
@@ -18,14 +19,12 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-    
+  
+
     Route::get('/mdetails', function () {
         return view('clients.meeting-details');
     });
-    
+
     Route::get('/meetingss', function () {
         return view('clients.meetings');
     });
@@ -35,25 +34,27 @@ Route::middleware([
 
 // Admin middleware group
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), Adminmiddleware::class])->group(function () {
-    // Admin dashboard
-    Route::get('/dash', function () {
+
+    Route::get('/dashboard', function () {
         return view('Admin.dashboard');
     });
     Route::get('/announcement', [AdminController::class, 'showAnnouncementForm'])->name('announcement');
     Route::post('/save-announcement', [AdminController::class, 'storeAnnouncement'])->name('save.announcement');
     Route::get('/view-announcements', [AdminController::class, 'viewAnnouncements'])->name('view.announcements');
-Route::get('/export-users-excel', [AdminController::class, 'exportExcel'])->name('users.export.excel');
-Route::get('/export-users-pdf', [AdminController::class, 'exportPDF'])->name('users.export.pdf');
+    Route::get('/user', [AdminController::class, ('getuser')]);
+    Route::get('/export-users-excel', [AdminController::class, 'exportExcel'])->name('users.export.excel');
+    Route::get('/export-users-pdf', [AdminController::class, 'exportPDF'])->name('users.export.pdf');
+    Route::get('/events', [EventController::class, 'getevents'])->name('events');
+    Route::get('/event/{id}', [EventController::class, 'show'])->name('event.details');
+    //    Route::get('/event/{id}', [EventController::class, 'show'])->name('event.details');
     // Announcement routes
 
 });
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), organizermiddleware::class])
     ->group(function () {
-       Route::get('/organ', function () {
-            return view('organizer.index'); 
-            
+        Route::get('/organ', function () {
+            return view('organizer.index');
         });
-       Route::post('/events', [EventController::class, 'store']);
+        Route::post('/events', [EventController::class, 'store']);
     });
-     

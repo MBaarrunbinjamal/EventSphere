@@ -95,9 +95,9 @@
           </label>
           <select name="role" class="form-select form-select-lg">
             <option value="">-- Select audience --</option>
-            <option value="1">Everyone</option>
-            <option value="2">Students Only</option>
-            <option value="3">Event Organizers</option>
+            <option value="Everyone">Everyone</option>
+            <option value="Students Only">Students Only</option>
+            <option value="Event Organizers">Event Organizers</option>
           </select>
         </div>
 

@@ -270,14 +270,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="organizer/assets/js/main.js"></script>
     @if(session('success'))
-    <script>
-        Swal.fire({
-            icon: 'success',
-            title: 'Success 🎉',
-            text: '{{ session('success') }}',
-            confirmButtonText: 'OK'
-        });
-    </script>
+   
 @endif
 
 </body>

@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Auth;
 Route::get('/', function () {
     return view('clients.index');
 });
+Route::get('/fetch-announcements', [AdminController::class, 'fetchAnnouncements']);
+
 
 // Auth middleware group
 Route::middleware([
@@ -30,6 +32,14 @@ Route::middleware([
     });
 
     Route::post('/contactform', [HomeController::class, 'insertcontact'])->name('contactform');
+});
+//  Student middleware group
+Route::get('/student', function () {
+    return view('student.index');
+});
+
+Route::get('/setting', function () {
+    return view('student.settings');
 });
 
 // Admin middleware group
@@ -73,7 +83,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), organizermi
        Route::post('/events', [EventController::class, 'store']);
       
   
-     
+     Route::get('/fetch-announcements', [AdminController::class, 'fetchAnnouncements']);
 
     });
 

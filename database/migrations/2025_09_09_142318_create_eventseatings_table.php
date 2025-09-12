@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('eventseatings', function (Blueprint $table) {
             $table->id();
                 $table->integer('event_id');
-                 $table->string('veneu');
+                 $table->integer('veneu');
                   $table->integer('total_seats');
                    $table->unsignedInteger('available_seats');
                     $table->boolean('Waitlist_enabled')->default(false);
                     $table->Foreign('event_id')->references('id')->on('events');
-                     $table->Foreign('veneu')->references('venue')->on('events');
+                     $table->Foreign('veneu')->references('id')->on('venues');
 
             $table->timestamps();
         });

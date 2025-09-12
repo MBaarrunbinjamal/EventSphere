@@ -53,6 +53,9 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), Adminmiddle
     Route::get('/export-users-pdf', [AdminController::class, 'exportPDF'])->name('users.export.pdf');
     Route::get('/events', [EventController::class, 'getevents'])->name('events');
     Route::get('/event/{id}', [EventController::class, 'show'])->name('event.details');
+     Route::get('/roleUpdate', [AdminController::class, 'roleUpdate']);
+     Route::post('/roleUpdate/{id}', [AdminController::class, 'roleUpdate'])->name('roleUpdate');
+
     //    Route::get('/event/{id}', [EventController::class, 'show'])->name('event.details');
     // Announcement routes
     Route::get('/venue',function(){

@@ -71,6 +71,17 @@ class AdminController extends Controller
         return redirect()->back()->with('message','Venue has been uploaded');
 
     }
+    public function roleUpdate(Request $req, $id)
+    {
+        $user = User::find($id);
+        if ($user) {
+            $user->role = $req->input('role');
+            $user->save();
+            return redirect()->back()->with('message', 'User role updated successfully.');
+        } else {
+            return redirect()->back()->with('error', 'User not found.');
+        }
+    }
 
 public function fetchAnnouncements()
 {

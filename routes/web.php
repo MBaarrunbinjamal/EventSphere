@@ -53,6 +53,10 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), Adminmiddle
     Route::get('/event/{id}', [EventController::class, 'show'])->name('event.details');
     //    Route::get('/event/{id}', [EventController::class, 'show'])->name('event.details');
     // Announcement routes
+    Route::get('/venue',function(){
+        return view('Admin.uploadvenue');
+    });
+    Route::post('/uploadvenue',[AdminController::class,('upload_venue')]);
 
 });
 
@@ -60,21 +64,14 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), organizermi
     ->group(function () {
         
        
-   Route::get('/organ', function () {
-        return view('organizer.index');
-    });
+   Route::get('/organ',[EventController::class,('geteventcreationpage')]);
             
         
        Route::post('/events', [EventController::class, 'store']);
       
   
      
-        Route::get('/organ', function () {
-            return view('organizer.index');
-        });
-        Route::post('/events', [EventController::class, 'store']);
-    
-       Route::post('/events', [EventController::class, 'store']);
+
     });
 
 

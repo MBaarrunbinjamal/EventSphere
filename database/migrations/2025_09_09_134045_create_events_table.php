@@ -18,9 +18,8 @@ return new class extends Migration
             $table->date('Date');
             $table->time('Time');
             $table->string('category');
-            $table->string('venue');
-
-      
+            $table->integer('venue');
+            $table->foreign('venue')->references('id')->on('venue');
             $table->unsignedBigInteger('Organizer_id');
             $table->foreign('Organizer_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();

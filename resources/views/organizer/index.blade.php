@@ -148,6 +148,12 @@
                     <li><a data-scroll href="#partner">Partner</a></li>                  
                     <li><a data-scroll href="#faq">FAQ</a></li>
                     <li><a data-scroll href="#photos">Photos</a></li>
+                    <li>
+                        <form action="/logout" method="post">
+                            @csrf
+                            <button type="submit" class="btn btn-danger">Logout</button>
+                        </form>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -210,7 +216,12 @@
 
                 <div class="col-12">
                     <label class="form-label fw-bold">Venue</label>
-                    <input type="text" class="form-control" name="venue" placeholder="Event Location" required>
+                    <select name="venuelist" id="" class="form-control">
+                        <option value="" selected disabled>Select venue</option>
+                        @foreach($ven as $v)
+                        <option value="{{$v->id}}">{{$v->venue_name}} | {{$v->venue_seats}}</option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
 

@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Models\Events;
-
+use App\Models\venue;
 
 class AdminController extends Controller
 {
@@ -59,6 +59,17 @@ class AdminController extends Controller
         return $pdf->download('users.pdf');
     }
 
+    public function upload_venue(Request $req)
+    {
+        $vname = $req->venue_name;
+        $vseats = $req->venue_seats;
 
+        $table = new venue();
+        $table->venue_name = $vname;
+        $table->venue_seats = $vseats;
+        $table->save();
+        return redirect()->back()->with('message','Venue has been uploaded');
+
+    }
 
 }

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Events;
 use App\Models\mediagallarey;
 use Illuminate\Support\Facades\Auth;
-
+use App\Models\venue;
 class EventController extends Controller
 {
     /**
@@ -15,14 +15,14 @@ class EventController extends Controller
     public function store(Request $request)
     {
         // Validate request data
-        $request->validate([
-            'title'       => 'required|string|max:255',
-            'category'    => 'required|string|max:100',
-            'description' => 'required|string',
-            'date'        => 'required|date',
-            'time'        => 'required',
-            'venue'       => 'required|string|max:255',
-        ]);
+        // $request->validate([
+        //     'title'       => 'required|string|max:255',
+        //     'category'    => 'required|string|max:100',
+        //     'description' => 'required|string',
+        //     'date'        => 'required|date',
+        //     'time'        => 'required',
+        //     'venue'       => 'required',
+        // ]);
 
         // Save event with organizer_id (from logged-in user)
         $event = new Events();
@@ -31,7 +31,7 @@ class EventController extends Controller
         $event->description  = $request->description;
         $event->date         = $request->date;
         $event->time         = $request->time;
-        $event->venue        = $request->venue;
+        $event->venue        = $request->venuelist;
         $event->organizer_id =  Auth::id();
         $event->save();
 
@@ -68,5 +68,10 @@ class EventController extends Controller
     {
         $event = Events::findOrFail($id);
         return view('Admin.events', compact('event'));
+    }
+    public function geteventcreationpage()
+    {
+        $ven = venue::get();
+        return view('organizer.index',compact('ven'));
     }
 }

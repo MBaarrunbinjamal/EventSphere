@@ -29,7 +29,6 @@
   100% { background-position: 0% 50%; }
 }
 
-/* Title */
 #event-form .section-title {
   font-size: 2.2rem;
   font-weight: 700;
@@ -42,7 +41,7 @@
   font-size: 1rem;
 }
 
-/* Form Container */
+
 #event-create-form {
   background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(12px);
@@ -58,13 +57,13 @@
   box-shadow: 0 15px 35px rgba(0,0,0,0.55);
 }
 
-/* Labels */
+
 #event-create-form .form-label {
   color: #f8f8f8;
   font-size: 0.95rem;
 }
 
-/* Inputs & Select */
+
 #event-create-form .form-control,
 #event-create-form .form-select,
 #event-create-form textarea {
@@ -86,12 +85,12 @@
   outline: none;
 }
 
-/* Placeholder text */
+
 #event-create-form ::placeholder {
   color: rgba(255, 255, 255, 0.7);
 }
 
-/* Submit Button */
+
 #event-create-form button {
   background: linear-gradient(45deg, #ff1e1eff, #2c0000ff, #000000ff);
   border: none;
@@ -148,12 +147,6 @@
                     <li><a data-scroll href="#partner">Partner</a></li>                  
                     <li><a data-scroll href="#faq">FAQ</a></li>
                     <li><a data-scroll href="#photos">Photos</a></li>
-                    <li>
-                        <form action="/logout" method="post">
-                            @csrf
-                            <button type="submit" class="btn btn-danger">Logout</button>
-                        </form>
-                    </li>
                 </ul>
             </div>
         </div>
@@ -216,16 +209,10 @@
 
                 <div class="col-12">
                     <label class="form-label fw-bold">Venue</label>
-                    <select name="venuelist" id="" class="form-control">
-                        <option value="" selected disabled>Select venue</option>
-                        @foreach($ven as $v)
-                        <option value="{{$v->id}}">{{$v->venue_name}} | {{$v->venue_seats}}</option>
-                        @endforeach
-                    </select>
+                    <input type="text" class="form-control" name="venue" placeholder="Event Location" required>
                 </div>
             </div>
 
-            <!-- Button centered -->
             <div class="text-center mt-4">
                 <button type="submit" class="btn btn-primary">Submit Event</button>
             </div>
@@ -234,7 +221,7 @@
 </section>
 
 
-    <!-- baki sections as it is -->
+  
     <section id="facts" class="section bg-image-1 facts text-center">
         <div class="container">
             <div class="row">
@@ -258,8 +245,7 @@
         </div><!-- container -->
     </section>
 
-    <!-- speakers, registration, schedule, partner, faq, photos, location, footer ... remain same -->
-    <!-- (I did not touch anything else except About Us section replacement) -->
+   
 
     <footer class="site-footer">
         <div class="container">

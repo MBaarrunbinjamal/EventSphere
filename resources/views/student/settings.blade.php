@@ -288,6 +288,7 @@ input:focus, textarea:focus {
 
 .inp {
    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.82);
+   background: rgba(255, 255, 255, 0.1);
   
 }
 
@@ -407,23 +408,54 @@ document.getElementById('closeReviewForm').addEventListener('click', function() 
 </script>
 
 <!-- main -->
-<br>
-<br>
+<br><br>
 
 <div>
-    <h1 class="text-center">Change Password</h1>
+  <h1 class="text-center">Change Password</h1>
 </div>
 <br>
-    
-    <p class="text-center">New Password:</p>
-   <center> <input class="w-50 inp" type="text"></center>
-    <br>
-    <p class="text-center">Confirm Password:</p>
-   <center> <input class="w-50 inp" type="text"></center>
-    <br>
-   <center> <button class="btn btn-primary">Update Password</button></center>
 
+<form id="passwordForm" onsubmit="return validatePasswords()">
+  <p class="text-center">New Password:</p>
+  <center>
+    <input 
+      class="w-50 inp form-control" 
+      type="password" 
+      id="newPassword" 
+      required 
+      minlength="6"
+      placeholder="Enter new password">
+  </center>
+  <br>
 
+  <p class="text-center">Confirm Password:</p>
+  <center>
+    <input 
+      class="w-50 inp form-control" 
+      type="password" 
+      id="confirmPassword" 
+      required 
+      placeholder="Re-enter new password">
+  </center>
+  <br>
+
+  <center>
+    <button class="btn btn-primary" type="submit">Update Password</button>
+  </center>
+</form>
+
+<script>
+function validatePasswords() {
+  const newPassword = document.getElementById("newPassword").value;
+  const confirmPassword = document.getElementById("confirmPassword").value;
+
+  if (newPassword !== confirmPassword) {
+    alert("Passwords do not match!");
+    return false; // stop form submission
+  }
+  return true; // allow submission
+}
+</script>
 <!-- footer start -->
  <footer class="bg-dark text-white text-center text-lg-start mt-auto shadow-sm fixed-bottom">
   <div class="container-fluid py-3 px-4 d-flex flex-column flex-lg-row justify-content-between align-items-center">

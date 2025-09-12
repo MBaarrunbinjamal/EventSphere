@@ -33,6 +33,14 @@ Route::middleware([
 
     Route::post('/contactform', [HomeController::class, 'insertcontact'])->name('contactform');
 });
+//  Student middleware group
+Route::get('/student', function () {
+    return view('student.index');
+});
+
+Route::get('/setting', function () {
+    return view('student.settings');
+});
 
 // Admin middleware group
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), Adminmiddleware::class])->group(function () {

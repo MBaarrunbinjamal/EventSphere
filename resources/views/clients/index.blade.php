@@ -1,5 +1,91 @@
 @extends('clients.headerfooter')
 @section('content')
+
+<style>
+ body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #3f3f3fff, #3f3f3fff);
+     
+    }
+
+
+   .orgh {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-size: 1.8rem;
+      color: #ffffffff;
+    }
+
+    label {
+      display: block;
+      text-align: left;
+      margin: 0.6rem 0 0.3rem;
+      font-weight: bold;
+      color: #444;
+    }
+
+    input {
+      width: 100%;
+      padding: 0.8rem;
+      border: 2px solid #ddd;
+      border-radius: 10px;
+      font-size: 1rem;
+      outline: none;
+      transition: 0.3s;
+    }
+
+    input:focus {
+      border-color: #d6ab00ff;
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.79);
+    }
+
+    .orgb {
+      margin-top: 1.5rem;
+      width: 100%;
+      padding: 0.9rem;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #c18d00ff, #ffbb00ff);
+      color: #fff;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .orgb:hover {
+      background: linear-gradient(135deg, #ffbb00ff, #c18d00ff);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .error {
+      color: red;
+      font-size: 0.9rem;
+      margin-top: 0.3rem;
+      text-align: left;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .organizer-form {
+      max-width: 800px;
+      margin: 2rem auto 4rem;
+      padding: 2rem;
+      border: 2px solid #cd7e00ff;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.72);
+      background-color: #21212146;
+      animation: fadeIn 0.8s ease-in-out;
+     
+   
+    }
+
+</style>
+
 <div class="content">
   <!-- ***** Main Banner Area Start ***** -->
   <section class="section main-banner" id="top" data-section="section1">
@@ -195,7 +281,7 @@
     </div>
   </section>
 
-  <section class="apply-now" id="apply">
+  <!-- <section class="apply-now" id="apply">
     <div class="container">
       <div class="row">
         <div class="col-lg-6 align-self-center">
@@ -281,7 +367,26 @@
         </div>
       </div>
     </div>
+  </section> -->
+
+  <section  class="apply-now" >
+    <div class="organizer-form">
+      <h1 class="orgh">Want to Become an Organizer?</h1>
+    <form id="organizerForm" novalidate>
+      <label for="name" class="text-white">Name</label>
+      <input type="text" id="name" placeholder="Enter your name">
+      <div id="nameError" class="error"></div>
+
+      <label for="email" class="text-white">Email</label>
+      <input type="text" id="email" placeholder="Enter your email">
+      <div id="emailError" class="error"></div>
+
+      <button type="submit" class="orgb">Send Request</button>
+    </form>
+    </div>
   </section>
+
+
 
   <section class="our-courses" id="courses">
     <div class="container">
@@ -679,5 +784,44 @@
       </div>
     </div>
 
+
+
+    
+  <script>
+    document.getElementById("organizerForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      let isValid = true;
+
+      // Name validation
+      const name = document.getElementById("name").value.trim();
+      const nameError = document.getElementById("nameError");
+      if (name === "") {
+        nameError.textContent = "Name is required.";
+        isValid = false;
+      } else {
+        nameError.textContent = "";
+      }
+
+      // Email validation
+      const email = document.getElementById("email").value.trim();
+      const emailError = document.getElementById("emailError");
+      const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+      if (email === "") {
+        emailError.textContent = "Email is required.";
+        isValid = false;
+      } else if (!email.match(emailPattern)) {
+        emailError.textContent = "Enter a valid email address.";
+        isValid = false;
+      } else {
+        emailError.textContent = "";
+      }
+
+      if (isValid) {
+        alert("✅ Request sent successfully!");
+        document.getElementById("organizerForm").reset();
+      }
+    });
+  </script>
 
     @endsection

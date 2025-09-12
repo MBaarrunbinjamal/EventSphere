@@ -104,6 +104,8 @@ html, body {
               <li><a href="#"><i class="fa fa-twitter"></i></a></li>
               <li><a href="#"><i class="fa fa-behance"></i></a></li>
               <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+             
+
             </ul>
           </div>
         </div>
@@ -112,7 +114,7 @@ html, body {
   </div>
   
 
-
+ 
   <!-- ***** Header Area Start ***** -->
   <header class="header-area header-sticky">
       <div class="container">
@@ -146,7 +148,7 @@ html, body {
 
                           <a href="/register" class="navbtn btna">Sign up</a>
                           @endif
-                         
+                         <ul id="announcementList"></ul>  
                            
                       </ul>        
                       <a class='menu-trigger'>
@@ -190,7 +192,33 @@ html, body {
     <script src="clients/assets/js/slick-slider.js"></script>
     <script src="clients/assets/js/custom.js"></script>
    
-</body>
+<script>
+  function loadAnnouncements() {
+    $.ajax({
+        url: "/fetch-announcements",
+        type: "GET",
+        success: function(response) {
+            if (response.status) {
+                $("#announcementList").empty();
+                response.data.forEach(function(item) {
+                    $("#announcementList").append(
+                        "<li><strong>" + item.title + "</strong>: " + item.content + "</li>"
+                    );
+                });
+            } else {
+                $("#announcementList").html("<li>No announcements available</li>");
+            }
+        },
+        error: function(xhr) {
+            console.error(xhr.responseText);
+        }
+    });
+}
+
+$(document).ready(function() {
+    loadAnnouncements();
+});
+</script>
 
 </body>
 </html>

@@ -148,6 +148,8 @@
                     <li><a data-scroll href="#partner">Partner</a></li>                  
                     <li><a data-scroll href="#faq">FAQ</a></li>
                     <li><a data-scroll href="#photos">Photos</a></li>
+                   
+ <ul id="announcementList"></ul>
                     <li>
                         <form action="/logout" method="post">
                             @csrf
@@ -173,7 +175,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12 text-center mb-4">
-                <h3 class="section-title">Create New Event</h3>
+                <h3 class="section-title">Create New Event </h3>
                 <p class="text-muted">Fill the details below to create your awesome event 🚀</p>
             </div>
         </div>
@@ -291,9 +293,36 @@
             text: '{{ session('success') }}',
             confirmButtonText: 'OK'
         });
+       
     </script>
 @endif
+<script>
+     function loadAnnouncements() {
+    $.ajax({
+        url: "/fetch-announcements",
+        type: "GET",
+        success: function(response) {
+            if (response.status) {
+                $("#announcementList").empty();
+                response.data.forEach(function(item) {
+                    $("#announcementList").append(
+                        "<li><strong>" + item.title + "</strong>: " + item.content + "</li>"
+                    );
+                });
+            } else {
+                $("#announcementList").html("<li>No announcements available</li>");
+            }
+        },
+        error: function(xhr) {
+            console.error(xhr.responseText);
+        }
+    });
+}
 
+$(document).ready(function() {
+    loadAnnouncements();
+});
+</script>
 </body>
 </html>
  

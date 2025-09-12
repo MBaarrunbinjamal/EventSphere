@@ -25,7 +25,7 @@ class AdminController extends Controller
          $rec->validate([
             'title' => 'required|string|max:255',
             'content' => 'required|string',
-            'role'=>'required|in:1,2,3',
+           
         ]);
         // Create a new announcement
         $announcement = new announcement();
@@ -72,4 +72,36 @@ class AdminController extends Controller
 
     }
 
+public function fetchAnnouncements()
+{
+  
+    $role = Auth::check() ? Auth::user()->role : 'guest';
+
+    $announcements = collect();
+
+    if ($role === 'user') {
+    
+        $announcements = Announcement::whereIn('role', ['Everyone', 'Students Only'])
+                                     ->where('is_active', 1)
+                                     ->get();
+    } elseif ($role === 'organizer') {
+  
+        $announcements = Announcement::whereIn('role', ['Everyone', 'Event Organizers'])
+                                     ->where('is_active', 1)
+                                     ->get();
+    } else {
+   
+        $announcements = Announcement::where('role', 'Everyone')
+                                     ->where('is_active', 1)
+                                     ->get();
+    }
+
+    return response()->json([
+        'status' => $announcements->isNotEmpty(),
+        'data'   => $announcements
+    ]);
 }
+
+}
+
+

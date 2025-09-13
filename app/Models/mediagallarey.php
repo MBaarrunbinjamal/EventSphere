@@ -6,5 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class mediagallarey extends Model
 {
-    //
+
+    protected $table = 'mediagallareys'; 
+    protected $fillable = ['image_path', 'caption', 'event_id', 'Organizer_id'];
+
+    
+    public function event()
+    {
+        return $this->belongsTo(events::class, 'event_id');
+    }
+
+    public function organizer()
+    {
+        return $this->belongsTo(User::class, 'Organizer_id');
+    }
 }

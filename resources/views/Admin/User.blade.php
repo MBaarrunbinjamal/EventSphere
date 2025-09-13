@@ -79,6 +79,7 @@
           <th scope="col">Email</th>
           <th scope="col">Current Role</th>
           <th scope="col">Change Role</th>
+          <th scope="col">Change Passwords</th>
         </tr>
       </thead>
       <tbody>
@@ -102,7 +103,9 @@
                 <i class="fas fa-user-edit"></i> Update
               </button>
             </form>
+               <td><form action="/dca/{{$item->id}}" method="POST">@csrf<button class="btn btn-warning"><b>Change password</b></button></form></td>
           </td>
+
         </tr>
         @endforeach
       </tbody>

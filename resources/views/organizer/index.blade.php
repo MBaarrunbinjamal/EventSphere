@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="organizer/bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="organizer/bower_components/ionicons/css/ionicons.min.css">
     <link rel="stylesheet" href="organizer/assets/css/main.css">
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
 
 #event-form {
@@ -29,7 +29,6 @@
   100% { background-position: 0% 50%; }
 }
 
-/* Title */
 #event-form .section-title {
   font-size: 2.2rem;
   font-weight: 700;
@@ -42,7 +41,7 @@
   font-size: 1rem;
 }
 
-/* Form Container */
+
 #event-create-form {
   background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(12px);
@@ -58,13 +57,13 @@
   box-shadow: 0 15px 35px rgba(0,0,0,0.55);
 }
 
-/* Labels */
+
 #event-create-form .form-label {
   color: #f8f8f8;
   font-size: 0.95rem;
 }
 
-/* Inputs & Select */
+
 #event-create-form .form-control,
 #event-create-form .form-select,
 #event-create-form textarea {
@@ -86,12 +85,12 @@
   outline: none;
 }
 
-/* Placeholder text */
+
 #event-create-form ::placeholder {
   color: rgba(255, 255, 255, 0.7);
 }
 
-/* Submit Button */
+
 #event-create-form button {
   background: linear-gradient(45deg, #ff1e1eff, #2c0000ff, #000000ff);
   border: none;
@@ -112,6 +111,19 @@
 .opt{
     color: black;
 
+}
+.box{
+    display: none;
+    background-color: white;
+}
+.abc{
+    background-color: transparent;
+    border: none;
+    color: white;
+    position: relative;
+    font-size: 24px;
+    cursor: pointer;
+    outline: none;
 }
 </style>
 
@@ -148,8 +160,11 @@
                     <li><a data-scroll href="#partner">Partner</a></li>                  
                     <li><a data-scroll href="#faq">FAQ</a></li>
                     <li><a data-scroll href="#photos">Photos</a></li>
-                   
- <ul id="announcementList"></ul>
+
+                   <button class="abc" onclick="show()"> <i class="fa fa-bell" aria-hidden="true" style="font-size:24px" ></i></button>
+                   <div class="box">
+                     <ul id="announcementList"></ul>
+                   </div>
                     <li>
                         <form action="/logout" method="post">
                             @csrf
@@ -175,7 +190,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12 text-center mb-4">
-                <h3 class="section-title">Create New Event </h3>
+                <h3 class="section-title">Create New Event</h3>
                 <p class="text-muted">Fill the details below to create your awesome event 🚀</p>
             </div>
         </div>
@@ -218,16 +233,15 @@
 
                 <div class="col-12">
                     <label class="form-label fw-bold">Venue</label>
-                    <select name="venuelist" id="" class="form-control">
-                        <option value="" selected disabled>Select venue</option>
-                        @foreach($ven as $v)
-                        <option value="{{$v->id}}">{{$v->venue_name}} | {{$v->venue_seats}}</option>
-                        @endforeach
-                    </select>
+               <select name="venue" id="venue" class="form-select" required> 
+    <option value="" selected disabled>-- Select Venue --</option>
+    @foreach($ven as $v)
+        <option value="{{$v->id}}">{{$v->venue_name}} | {{$v->venue_seats}}</option>
+    @endforeach
+</select>
                 </div>
             </div>
 
-            <!-- Button centered -->
             <div class="text-center mt-4">
                 <button type="submit" class="btn btn-primary">Submit Event</button>
             </div>
@@ -236,7 +250,7 @@
 </section>
 
 
-    <!-- baki sections as it is -->
+  
     <section id="facts" class="section bg-image-1 facts text-center">
         <div class="container">
             <div class="row">
@@ -260,8 +274,7 @@
         </div><!-- container -->
     </section>
 
-    <!-- speakers, registration, schedule, partner, faq, photos, location, footer ... remain same -->
-    <!-- (I did not touch anything else except About Us section replacement) -->
+   
 
     <footer class="site-footer">
         <div class="container">
@@ -286,7 +299,8 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="organizer/assets/js/main.js"></script>
     @if(session('success'))
-    <script>
+   
+   <script>
         Swal.fire({
             icon: 'success',
             title: 'Success 🎉',
@@ -296,8 +310,7 @@
        
     </script>
 @endif
-<script>
-     function loadAnnouncements() {
+<script> function loadAnnouncements() {
     $.ajax({
         url: "/fetch-announcements",
         type: "GET",
@@ -321,7 +334,18 @@
 
 $(document).ready(function() {
     loadAnnouncements();
-});
+});      
+function show(){
+    var box=document.getElementsByClassName('box');
+    if(box[0].style.display==='none'){
+        box[0].style.display='block';
+    }
+    else{
+        box[0].style.display='none';
+
+       
+   }
+}
 </script>
 </body>
 </html>

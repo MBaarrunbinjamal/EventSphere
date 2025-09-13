@@ -7,7 +7,7 @@ use App\Models\Review;
 
 class ReviewController extends Controller
 {
-    // public store route (no admin middleware)
+    
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -21,14 +21,14 @@ class ReviewController extends Controller
         return redirect()->back()->with('success', 'Thanks! Your review was submitted and is awaiting admin approval.');
     }
 
-    // admin dashboard: list all reviews (or filter)
+    
     public function adminIndex()
     {
         $reviews = Review::orderBy('created_at', 'desc')->get();
         return view('Admin.reviews', compact('reviews'));
     }
 
-    // admin action: accept / deny
+    
     public function updateStatus(Request $request, Review $review)
     {
         $request->validate([
@@ -41,7 +41,7 @@ class ReviewController extends Controller
         return redirect()->back()->with('success', 'Review status updated to: ' . $review->status);
     }
 
-    // optional: delete
+    
     public function destroy(Review $review)
     {
         $review->delete();

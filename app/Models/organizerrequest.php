@@ -4,8 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Events extends Model
+class organizerrequest extends Model
 {
-    protected $table = 'events';
+    //
 }
-

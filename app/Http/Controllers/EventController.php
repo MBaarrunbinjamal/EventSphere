@@ -7,6 +7,9 @@ use App\Models\Events;
 use App\Models\mediagallarey;
 use Illuminate\Support\Facades\Auth;
 use App\Models\venue;
+use App\Models\organizerrequest;
+use App\Models\User;
+
 class EventController extends Controller
 {
     /**
@@ -14,24 +17,14 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        // Validate request data
-        // $request->validate([
-        //     'title'       => 'required|string|max:255',
-        //     'category'    => 'required|string|max:100',
-        //     'description' => 'required|string',
-        //     'date'        => 'required|date',
-        //     'time'        => 'required',
-        //     'venue'       => 'required',
-        // ]);
-
-        // Save event with organizer_id (from logged-in user)
+        
         $event = new Events();
         $event->title        = $request->title;
         $event->category     = $request->category;
         $event->description  = $request->description;
         $event->date         = $request->date;
         $event->time         = $request->time;
-        $event->venue        = $request->venuelist;
+        $event->venue        = $request->venue;
         $event->organizer_id =  Auth::id();
         $event->save();
 
@@ -69,9 +62,23 @@ class EventController extends Controller
         $event = Events::findOrFail($id);
         return view('Admin.events', compact('event'));
     }
-    public function geteventcreationpage()
+    
+     public function geteventcreationpage()
     {
         $ven = venue::get();
         return view('organizer.index',compact('ven'));
     }
+    public function organizerRequest(Request $oreq)
+    {
+        
+$oreq->name;
+$oreq->email;
+$rec=new organizerrequest();
+$rec->name=$oreq->name;
+$rec->email=$oreq->email;
+$rec->organizerstatus='Pending'; 
+$rec->save();
+return redirect()->back()->with('success', 'Request sent successfully. We will get back to you soon!');
+    }
+
 }

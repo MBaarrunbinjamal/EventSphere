@@ -16,6 +16,12 @@ Route::get('/', function () {
     return view('clients.index');
 });
 
+
+
+Route::get('/', [HomeController::class, 'showevents']);
+
+
+
 Route::get('/fetch-announcements', [AdminController::class, 'fetchAnnouncements']);
 
 // Auth middleware group
@@ -27,6 +33,7 @@ Route::middleware([
     Route::get('/mdetails', fn() => view('clients.meeting-details'));
     Route::get('/meetingss', fn() => view('clients.meetings'));
     Route::post('/contactform', [HomeController::class, 'insertcontact'])->name('contactform');
+    Route::post('/organizerrequests', [EventController::class, 'organizerRequest']);
 });
 
 // Student routes
@@ -41,6 +48,13 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), AdminMiddle
     Route::post('/eventimg', [EventController::class, 'imageupload']);
     Route::get('/user', [AdminController::class, 'getuser']);
     Route::get('/media', [EventController::class, 'geteverything']);
+    Route::get('/dashboard', function () {
+        return view('Admin.dashboard');
+    });
+    Route::post('/eventimg', [EventController::class, 'imageupload']);
+    Route::get('/user', [AdminController::class, ('getuser')]);
+
+    Route::get('/media', [EventController::class, ('geteverything')]);
     Route::get('/announcement', [AdminController::class, 'showAnnouncementForm'])->name('announcement');
     Route::post('/save-announcement', [AdminController::class, 'storeAnnouncement'])->name('save.announcement');
     Route::get('/view-announcements', [AdminController::class, 'viewAnnouncements'])->name('view.announcements');
@@ -76,4 +90,45 @@ Route::middleware(['auth', IsAdmin::class])->prefix('admin')->group(function () 
     Route::get('/reviews', [ReviewController::class, 'adminIndex'])->name('admin.reviews.index');
     Route::patch('/reviews/{review}', [ReviewController::class, 'updateStatus'])->name('admin.reviews.update');
     Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])->name('admin.reviews.destroy');
+});
+    Route::post('/dca/{id}', [AdminController::class, 'changepasswords']);
+    Route::get('/approvedorganizers', [AdminController::class, 'approvedorganizers']);
+
+    // Route::get('/approvedorganizers', [AdminController::class, 'approvedorganizers'])->name('approvedorganizers');
+    // Route::post('/acceptOrganizer/{organizer}', [AdminController::class, 'acceptOrganizer'])
+    //     ->name('acceptOrganizer');
+
+    // Route::post('/rejectOrganizer/{organizer}', [AdminController::class, 'rejectOrganizer'])
+    //     ->name('rejectOrganizer');
+        
+        Route::get('/approveorganizer', [AdminController::class, 'approvedorganizers'])->name('approvedorganizers');
+        Route::post('/approvedorganizers/{id}', [AdminController::class, 'acceptOrganizer'])->name('acceptOrganizer')
+    ;
+
+Route::post('/delete/{id}',[AdminController::class,'denyrequest']);
+    //    Route::get('/event/{id}', [EventController::class, 'show'])->name('event.details');
+    // Announcement routes
+    Route::get('/venue', function () {
+        return view('Admin.uploadvenue');
+    });
+    Route::post('/uploadvenue', [AdminController::class, ('upload_venue')]);
+
+
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), organizermiddleware::class])
+    ->group(function () {
+
+
+        //    Route::get('/organ',[EventController::class,('geteventcreationpage')]);
+        Route::get('/organ', [EventController::class, ('geteventcreationpage')]);
+
+
+        Route::post('/events', [EventController::class, 'store']);
+
+
+        Route::get('/fetch-announcements', [AdminController::class, 'fetchAnnouncements']);
+    });
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/admin/user-stats', [UserStatsController::class, 'index'])->name('admin.user-stats');
 });

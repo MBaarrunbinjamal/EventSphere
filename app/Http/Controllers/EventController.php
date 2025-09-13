@@ -17,7 +17,7 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $event = new Events();
         $event->title        = $request->title;
         $event->category     = $request->category;
@@ -37,23 +37,23 @@ class EventController extends Controller
     }
     public function imageupload(Request $req)
     {
-     $file = $req->file('image_path');
+        $file = $req->file('image_path');
         $req->event_id;
         $req->caption;
         $fileName = time() . '_' . $file->getClientOriginalName();
- $file->move(public_path('uploads'), $fileName);
+        $file->move(public_path('uploads'), $fileName);
 
-   $rec=new mediagallarey();
-    $rec->event_id=$req->event_id;
-    $rec->caption=$req->caption;
-    $rec->image_path=$fileName;
-    $rec->organizer_id=Auth::id();
-    $rec->save();
-    return redirect()->back();      
+        $rec = new mediagallarey();
+        $rec->event_id = $req->event_id;
+        $rec->caption = $req->caption;
+        $rec->image_path = $fileName;
+        $rec->organizer_id = Auth::id();
+        $rec->save();
+        return redirect()->back();
     }
-   public function getevents()
+    public function getevents()
     {
-         $events = Events::orderBy('created_at', 'desc')->get();
+        $events = Events::orderBy('created_at', 'desc')->get();
         return view('Admin.events', compact('events'));
     }
 
@@ -62,23 +62,29 @@ class EventController extends Controller
         $event = Events::findOrFail($id);
         return view('Admin.events', compact('event'));
     }
-    
-     public function geteventcreationpage()
+
+    public function geteventcreationpage()
     {
         $ven = venue::get();
-        return view('organizer.index',compact('ven'));
+        return view('organizer.index', compact('ven'));
     }
     public function organizerRequest(Request $oreq)
     {
-        
-$oreq->name;
-$oreq->email;
-$rec=new organizerrequest();
-$rec->name=$oreq->name;
-$rec->email=$oreq->email;
-$rec->organizerstatus='Pending'; 
-$rec->save();
-return redirect()->back()->with('success', 'Request sent successfully. We will get back to you soon!');
+
+        $oreq->name;
+        $oreq->email;
+        $rec = new organizerrequest();
+        $rec->name = $oreq->name;
+        $rec->email = $oreq->email;
+        $rec->organizerstatus = 'Pending';
+        $rec->save();
+        return redirect()->back()->with('success', 'Request sent successfully. We will get back to you soon!');
     }
 
+    public function index()
+    {
+
+        $events = Events::where('status', 'approved')->latest()->get();
+        return view('clients.index', compact('events'));
+    }
 }

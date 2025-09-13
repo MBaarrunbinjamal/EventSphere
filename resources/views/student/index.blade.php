@@ -466,8 +466,6 @@ input:focus, textarea:focus {
   </div>
 </nav>
 
-
-
  <div class="reviews" id="addReviewBtn">
     <a href="#">
         <img src="{{ asset('clients/assets/images/reviewbtn.png') }}" alt="Review">

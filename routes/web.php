@@ -12,13 +12,10 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ReviewController;
 
-Route::get('/', function () {
-    return view('clients.index');
-});
+
+Route::get('/', [EventController::class, 'index']);
 
 
-
-Route::get('/', [HomeController::class, 'showevents']);
 
 
 

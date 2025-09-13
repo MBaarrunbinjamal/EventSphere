@@ -83,6 +83,24 @@
      
    
     }
+    .event-card {
+  border-radius: 14px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+  color: #fff;
+}
+
+.event-card img {
+  height: 200px;
+  object-fit: cover;
+}
+
+.event-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+}
+
 
 </style>
 
@@ -280,6 +298,31 @@
       </div>
     </div>
   </section>
+<section class="container my-5">
+  <h2 class="text-center fw-bold mb-4">🎉 Upcoming Events</h2>
+  <div class="row g-4">
+    @foreach($events as $event)
+      <div class="col-md-6 col-lg-4">
+        <div class="card event-card shadow-lg h-100 border-0">
+          <img src="{{ asset('storage/'.$event->image) }}" class="card-img-top" alt="{{ $event->title }}">
+          <div class="card-body">
+            <h5 class="card-title text-danger fw-bold">{{ $event->title }}</h5>
+            <p class="card-text text-muted">
+              {{ Str::limit($event->description, 100) }}
+            </p>
+            <p class="mb-1"><i class="bi bi-calendar-event"></i> {{ $event->date }}</p>
+            <p class="mb-2"><i class="bi bi-geo-alt"></i> {{ $event->venue }}</p>
+            <a href="#" class="btn btn-sm btn-danger">View Details</a>
+          </div>
+        </div>
+      </div>
+    @endforeach
+
+    @if($events->isEmpty())
+      <p class="text-center text-muted">No upcoming events yet.</p>
+    @endif
+  </div>
+</section>
 
   <!-- <section class="apply-now" id="apply">
     <div class="container">

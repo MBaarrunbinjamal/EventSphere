@@ -135,7 +135,7 @@ body {
         <li class="nav-item"><a class="nav-link" href="/dashboard">Dashboard</a></li>
         <li class="nav-item"><a class="nav-link" href="/user">Users</a></li>
         <li class="nav-item"><a class="nav-link" href="/announcement">Announcements</a></li>
-        <li class="nav-item"><a class="nav-link" href="/question">UsersPassword</a></li>
+        <li class="nav-item"><a class="nav-link" href="/approvedorganizers">Organizer Requests</a></li>
         <li class="nav-item"><a class="nav-link" href="/events">Events</a></li>
         <li class="nav-item"><a class="nav-link" href="/media">Media</a></li>
         <li class="nav-item"><a class="nav-link" href="/">Back To Web</a></li>

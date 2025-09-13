@@ -34,7 +34,7 @@ body {
   }
   75% {
     background-position: 50% 0%;
-  }
+  } 
   100% {
     background-position: 0% 50%;
   }

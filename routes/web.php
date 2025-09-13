@@ -1,4 +1,5 @@
 <?php
+
 use App\Http\Controllers\Admin\UserStatsController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EventController;
@@ -9,10 +10,12 @@ use App\Http\Middleware\Studentmiddleware;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
-Route::get('/', function () {
-    return view('clients.index');
-});
-Route::get('/fetch-announcements', [AdminController::class, 'fetchAnnouncements']);
+
+
+
+Route::get('/', [HomeController::class, 'showevents']);
+
+
 
 
 // Auth middleware group
@@ -21,7 +24,7 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-  
+
 
     Route::get('/mdetails', function () {
         return view('clients.meeting-details');
@@ -32,6 +35,7 @@ Route::middleware([
     });
 
     Route::post('/contactform', [HomeController::class, 'insertcontact'])->name('contactform');
+    Route::post('/organizerrequests', [EventController::class, 'organizerRequest']);
 });
 //  Student middleware group
 Route::get('/student', function () {
@@ -47,12 +51,11 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), Adminmiddle
 
     Route::get('/dashboard', function () {
         return view('Admin.dashboard');
-
     });
-       Route::post('/eventimg', [EventController::class, 'imageupload']);
-    Route::get('/user', [AdminController::class,('getuser')]);
+    Route::post('/eventimg', [EventController::class, 'imageupload']);
+    Route::get('/user', [AdminController::class, ('getuser')]);
 
-       Route::get('/media', [EventController::class,('geteverything')]);
+    Route::get('/media', [EventController::class, ('geteverything')]);
     Route::get('/announcement', [AdminController::class, 'showAnnouncementForm'])->name('announcement');
     Route::post('/save-announcement', [AdminController::class, 'storeAnnouncement'])->name('save.announcement');
     Route::get('/view-announcements', [AdminController::class, 'viewAnnouncements'])->name('view.announcements');
@@ -61,34 +64,46 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), Adminmiddle
     Route::get('/export-users-pdf', [AdminController::class, 'exportPDF'])->name('users.export.pdf');
     Route::get('/events', [EventController::class, 'getevents'])->name('events');
     Route::get('/event/{id}', [EventController::class, 'show'])->name('event.details');
-     Route::get('/roleUpdate', [AdminController::class, 'roleUpdate']);
-     Route::post('/roleUpdate/{id}', [AdminController::class, 'roleUpdate'])->name('roleUpdate');
+    Route::get('/roleUpdate', [AdminController::class, 'roleUpdate']);
+    Route::post('/roleUpdate/{id}', [AdminController::class, 'roleUpdate'])->name('roleUpdate');
+    Route::post('/dca/{id}', [AdminController::class, 'changepasswords']);
+    Route::get('/approvedorganizers', [AdminController::class, 'approvedorganizers']);
 
+    // Route::get('/approvedorganizers', [AdminController::class, 'approvedorganizers'])->name('approvedorganizers');
+    // Route::post('/acceptOrganizer/{organizer}', [AdminController::class, 'acceptOrganizer'])
+    //     ->name('acceptOrganizer');
+
+    // Route::post('/rejectOrganizer/{organizer}', [AdminController::class, 'rejectOrganizer'])
+    //     ->name('rejectOrganizer');
+        
+        Route::get('/approveorganizer', [AdminController::class, 'approvedorganizers'])->name('approvedorganizers');
+        Route::post('/approvedorganizers/{id}', [AdminController::class, 'acceptOrganizer'])->name('acceptOrganizer')
+    ;
+
+Route::post('/delete/{id}',[AdminController::class,'denyrequest']);
     //    Route::get('/event/{id}', [EventController::class, 'show'])->name('event.details');
     // Announcement routes
-    Route::get('/venue',function(){
+    Route::get('/venue', function () {
         return view('Admin.uploadvenue');
     });
-    Route::post('/uploadvenue',[AdminController::class,('upload_venue')]);
-
+    Route::post('/uploadvenue', [AdminController::class, ('upload_venue')]);
 });
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), organizermiddleware::class])
     ->group(function () {
-        
-       
-   Route::get('/organ',[EventController::class,('geteventcreationpage')]);
-            
-        
-       Route::post('/events', [EventController::class, 'store']);
-      
-  
-     Route::get('/fetch-announcements', [AdminController::class, 'fetchAnnouncements']);
 
+
+        //    Route::get('/organ',[EventController::class,('geteventcreationpage')]);
+        Route::get('/organ', [EventController::class, ('geteventcreationpage')]);
+
+
+        Route::post('/events', [EventController::class, 'store']);
+
+
+        Route::get('/fetch-announcements', [AdminController::class, 'fetchAnnouncements']);
     });
 
 
-    Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::get('/admin/user-stats', [UserStatsController::class, 'index'])->name('admin.user-stats');
 });
-     

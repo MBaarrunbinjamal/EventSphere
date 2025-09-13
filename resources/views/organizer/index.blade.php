@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="organizer/bower_components/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="organizer/bower_components/ionicons/css/ionicons.min.css">
     <link rel="stylesheet" href="organizer/assets/css/main.css">
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
 
 #event-form {
@@ -112,6 +112,19 @@
     color: black;
 
 }
+.box{
+    display: none;
+    background-color: white;
+}
+.abc{
+    background-color: transparent;
+    border: none;
+    color: white;
+    position: relative;
+    font-size: 24px;
+    cursor: pointer;
+    outline: none;
+}
 </style>
 
 </head>
@@ -147,6 +160,17 @@
                     <li><a data-scroll href="#partner">Partner</a></li>                  
                     <li><a data-scroll href="#faq">FAQ</a></li>
                     <li><a data-scroll href="#photos">Photos</a></li>
+
+                   <button class="abc" onclick="show()"> <i class="fa fa-bell" aria-hidden="true" style="font-size:24px" ></i></button>
+                   <div class="box">
+                     <ul id="announcementList"></ul>
+                   </div>
+                    <li>
+                        <form action="/logout" method="post">
+                            @csrf
+                            <button type="submit" class="btn btn-danger">Logout</button>
+                        </form>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -209,7 +233,12 @@
 
                 <div class="col-12">
                     <label class="form-label fw-bold">Venue</label>
-                    <input type="text" class="form-control" name="venue" placeholder="Event Location" required>
+               <select name="venue" id="venue" class="form-select" required> 
+    <option value="" selected disabled>-- Select Venue --</option>
+    @foreach($ven as $v)
+        <option value="{{$v->id}}">{{$v->venue_name}} | {{$v->venue_seats}}</option>
+    @endforeach
+</select>
                 </div>
             </div>
 
@@ -271,8 +300,53 @@
     <script src="organizer/assets/js/main.js"></script>
     @if(session('success'))
    
+   <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Success 🎉',
+            text: '{{ session('success') }}',
+            confirmButtonText: 'OK'
+        });
+       
+    </script>
 @endif
+<script> function loadAnnouncements() {
+    $.ajax({
+        url: "/fetch-announcements",
+        type: "GET",
+        success: function(response) {
+            if (response.status) {
+                $("#announcementList").empty();
+                response.data.forEach(function(item) {
+                    $("#announcementList").append(
+                        "<li><strong>" + item.title + "</strong>: " + item.content + "</li>"
+                    );
+                });
+            } else {
+                $("#announcementList").html("<li>No announcements available</li>");
+            }
+        },
+        error: function(xhr) {
+            console.error(xhr.responseText);
+        }
+    });
+}
 
+$(document).ready(function() {
+    loadAnnouncements();
+});      
+function show(){
+    var box=document.getElementsByClassName('box');
+    if(box[0].style.display==='none'){
+        box[0].style.display='block';
+    }
+    else{
+        box[0].style.display='none';
+
+       
+   }
+}
+</script>
 </body>
 </html>
  

@@ -372,17 +372,25 @@
   <section  class="apply-now" >
     <div class="organizer-form">
       <h1 class="orgh">Want to Become an Organizer?</h1>
-    <form id="organizerForm" novalidate>
-      <label for="name" class="text-white">Name</label>
-      <input type="text" id="name" placeholder="Enter your name">
-      <div id="nameError" class="error"></div>
+    <form action="/organizerrequests" id="organizerForm" method="POST">
+      @csrf
 
-      <label for="email" class="text-white">Email</label>
-      <input type="text" id="email" placeholder="Enter your email">
-      <div id="emailError" class="error"></div>
+    <label for="name" class="text-white">Name</label>
+    <input type="text" id="name" name="name" placeholder="Enter your name" required>
+   
 
-      <button type="submit" class="orgb">Send Request</button>
-    </form>
+    <label for="email" class="text-white">Email</label>
+    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+   
+    <button type="submit" class="orgb">Send Request</button>
+</form>
+@if(Auth::User()->user=='Organizerstatus=='Pending'
+<h1>Application Pending</h1>
+@elseif(Auth::User()->user=='Organizerstatus=='Approved'
+<h1>Application Approved</h1>
+
+
+
     </div>
   </section>
 
@@ -665,6 +673,7 @@
     </div>
   </section>
 
+
   <section class="our-facts">
     <div class="container">
       <div class="row">
@@ -785,43 +794,6 @@
     </div>
 
 
-
     
-  <script>
-    document.getElementById("organizerForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-
-      let isValid = true;
-
-      // Name validation
-      const name = document.getElementById("name").value.trim();
-      const nameError = document.getElementById("nameError");
-      if (name === "") {
-        nameError.textContent = "Name is required.";
-        isValid = false;
-      } else {
-        nameError.textContent = "";
-      }
-
-      // Email validation
-      const email = document.getElementById("email").value.trim();
-      const emailError = document.getElementById("emailError");
-      const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
-      if (email === "") {
-        emailError.textContent = "Email is required.";
-        isValid = false;
-      } else if (!email.match(emailPattern)) {
-        emailError.textContent = "Enter a valid email address.";
-        isValid = false;
-      } else {
-        emailError.textContent = "";
-      }
-
-      if (isValid) {
-        alert("✅ Request sent successfully!");
-        document.getElementById("organizerForm").reset();
-      }
-    });
-  </script>
-
+  
     @endsection
